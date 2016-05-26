@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         SlitherBots
-// @namespace    SlitherBot Client By l3mpik
+// @name         Slither Feeder Bot
+// @namespace    Slither Feeder Bot  by l3mpik
 // @version      1.0
-// @description  Slither.io Bots
+// @description  Slither Feeder Bot
 // @author       l3mpik
 // @match        *://slither.io/*
 // @require      https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js
