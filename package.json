@@ -1,7 +1,7 @@
 {
-  "name": "rattlesnake",
+  "name": "Slither Feeder Bot",
   "version": "0.0.0",
-  "description": "An Open Source Slither.io Client",
+  "description": "An Open Source Slither.io Slither bots",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -10,19 +10,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dahquan/rattlesnake"
+    "url": "git+https://github.com/l3mpik/slither-feeder-bot"
   },
   "keywords": [
     "slither",
     "bot",
     "client"
   ],
-  "author": "Dahquan Hinds <contact@dahquan.com>",
+  "author": "Michał Łempicki <l3mpik@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/dahquan/rattlesnake/issues"
+    "url": "https://github.com/l3mpik/slither-feeder-bot/issues"
   },
-  "homepage": "https://github.com/dahquan/rattlesnake#readme",
+  "homepage": "https://github.com/l3mpik/slither-feeder-bot#readme",
   "devDependencies": {
     "babel-cli": "^6.8.0",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -37,6 +37,7 @@
     "socks-proxy-agent": "^2.0.0",
     "tunnel": "0.0.4",
     "websocket": "^1.0.22",
-    "winston": "^2.2.0"
+    "winston": "^2.2.0",
+	"socket.io-client": "^1.4.6"
   }
 }
