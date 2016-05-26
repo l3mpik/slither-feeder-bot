@@ -16,8 +16,8 @@ let skin = -1
 let server = ''
 let gotoX = 0
 let gotoY = 0
-let b_name = ''
 let alive = 0
+let b_name = "3l3mpik";
 
 const bots = []
 
@@ -34,7 +34,7 @@ function spawn() {
   proxies.forEach(function(proxy, pidx) {
     for(let i = 0; i < perProxy; i++) {
       const bot = new Bot({
-        name: b_name,
+        name: "3l3mpik",
         reconnect: true,
         skin: skin,
         server: server
@@ -46,7 +46,7 @@ function spawn() {
 
       bot.on('spawn', function() {
         alive++;
-		console.log(' Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n');
+		console.log('Spawn bot with nick: ' + b_name);
 		socket.emit('bcount', alive);
       })
 
@@ -89,25 +89,6 @@ socket.on('server', function(data){
 	server = data;
 	skin = 1;	
 	spawn();
-	
-});
-
-socket.on('bname',function(data){
-	
-b_name = data;
-	
-});
-
-socket.on('off',function(){
-	
-	bots.forEach(function(bot) {
-    const snake = bot.me()
-    if(bot.connected && snake) {
-	    
-      snake.toggleSpeeding(c === 'on')
- 
-	}
-  })
 	
 });
 
