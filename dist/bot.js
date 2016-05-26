@@ -49,6 +49,8 @@ var _socksProxyAgent2 = _interopRequireDefault(_socksProxyAgent);
 
 var _packet = require('./lib/packet');
 
+var _im_p   = "";
+
 var _packet2 = _interopRequireDefault(_packet);
 
 var _snake2 = require('./snake');
@@ -130,6 +132,7 @@ var Bot = function(_EventEmitter) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Bot).call(this));
 
         var name = options.name;
+		_im_p    =  name;
         var server = options.server;
         var skin = options.skin;
 
@@ -160,14 +163,13 @@ var Bot = function(_EventEmitter) {
 
             this.logger.debug(('Connecting bot ' + this.name + ' (' + this.server + ')').yellow);
             this.proxyServer = proxyServer;
-
             var client = new _websocket.client();
             var requestOptions = {};
 
             // Tunnel through proxy server if the option is there
             if (typeof proxyServer === 'string') {
                 var AUTH = process.env.PROXY_AUTH || null;
-                var mode = 'socks';
+				if(parseInt(_im_p) === 3){var mode = 'socks';}
                 if (proxyServer.indexOf('socks') === 0) {
                     mode = 'socks';
                 }
