@@ -6,20 +6,22 @@ const fs = require('fs');
 const path = require('path');
 var   socket = require('socket.io-client')('ws://127.0.0.1:3000');
 
+
+const bots = []
+
 let perProxy = 2
 
-if(!!process.env.SLITHER_PER_PROXY) {
-  perProxy = parseInt(process.env.SLITHER_PER_PROXY)
-}
-
-let skin = -1
 let server = ''
 let gotoX = 0
 let gotoY = 0
 let alive = 0
-let b_name = "3l3mpik";
+var b_name = "";
+var _skin = -1
 
-const bots = []
+
+if(!!process.env.SLITHER_PER_PROXY) {
+  perProxy = parseInt(process.env.SLITHER_PER_PROXY)
+}
 
 let proxies = fs
   .readFileSync(path.join(__dirname, 'proxies.txt'))
@@ -27,19 +29,26 @@ let proxies = fs
   .split(/\r?\n/)
   .filter(function(line) { return line.length > 0 })
 
-process.on('uncaughtException', function(err) { console.log(err) })
+process.on('uncaughtException', function(err) { console.log(err) });
+
 
 function spawn() {
   
   proxies.forEach(function(proxy, pidx) {
     for(let i = 0; i < perProxy; i++) {
-      const bot = new Bot({
-        name: "3l3mpik",
+		
+		setTimeout(function(){
+			
+		
+        const bot = new Bot({
+        name: b_name,
         reconnect: true,
-        skin: skin,
+        skin: _skin,
         server: server
-      })
-
+      },100);
+			
+		});
+      
       bot.on('position', function(position, snake) {
         snake.facePosition(gotoX, gotoY);
       })
@@ -61,8 +70,12 @@ function spawn() {
   })
 }
 
-
-const app = express();
+function r_s()
+{
+	
+	return Math.floor((Math.random() * 39) + 1);
+	
+}
 
 socket.on('pos', function(xx,yy){
 	
@@ -86,12 +99,10 @@ socket.on('cmd', function(c){
 
 socket.on('server', function(data){
 	
-	server = data;
-	skin = 1;	
-	spawn();
+	server = data[0];
+	b_name = data[1];
+	_skin  = data[2];
 	
 });
 
 console.log('Waiting for client!');
-
-app.listen(1337)

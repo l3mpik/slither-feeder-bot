@@ -6,6 +6,7 @@ var io = require('socket.io')(http);
 
 var s_port = 3000;
 
+
 io.on('connection', function(socket) {
     
 	console.log('Connection!');
@@ -13,36 +14,32 @@ io.on('connection', function(socket) {
     socket.on('pos', function(x, y) {
        
 	   io.emit('pos', x, y);
-
+       
     });
-
-    socket.on('cmd', function(data) {
-
-        if (data == 1) {
-            io.emit('cmd', 'on');
-        } else {
-            io.emit('cmd', 'off');
-        }
-		
-    });
-
-    socket.on('server', function(data) {
+    
+	socket.on('server', function(data) {
 
             io.emit('server', data);
-  	
+			
+			console.log('Bots name:' + data[1]);
+			
     });
+	
+    socket.on('cmd', function(data) {
 
-    socket.on('bname', function(data) {
-
-        io.emit('bname', data);
-
-        console.log('Bots name: ' + data);
-
+        if (data == 1) 
+		{
+            io.emit('cmd', 'on');
+        }
+		else
+		{
+		    io.emit('cmd', 'off');	
+		}
+		
     });
 
     socket.on('bcount', function(data) {
 
-        //console.log('Bots: ' + data);	
         io.emit('bcount', data);
 
     })
