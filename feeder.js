@@ -31,41 +31,36 @@ let proxies = fs
 
 process.on('uncaughtException', function(err) { console.log(err) });
 
-
 function spawn() {
-  
+ 
+
   proxies.forEach(function(proxy, pidx) {
     for(let i = 0; i < perProxy; i++) {
-		
-		setTimeout(function(){
-			
-		
-        const bot = new Bot({
+      const bot = new Bot({
         name: b_name,
         reconnect: true,
         skin: _skin,
         server: server
-      },100);
-			
-		});
-      
+      })
+
       bot.on('position', function(position, snake) {
-        snake.facePosition(gotoX, gotoY);
+        snake.facePosition(gotoX, gotoY)
       })
 
       bot.on('spawn', function() {
-        alive++;
-		console.log('Spawn bot with nick: ' + b_name);
+        alive++
 		socket.emit('bcount', alive);
+        console.log('Spawn bot Nick: ' + b_name)
       })
 
       bot.on('disconnected', function() {
-        alive--;
+        alive--
 		socket.emit('bcount', alive);
+		console.log('Bot die');
       })
 
       bots.push(bot)
-      bot.connect(proxy);
+      bot.connect(proxy)
     }
   })
 }
