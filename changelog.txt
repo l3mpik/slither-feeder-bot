@@ -1,0 +1,14 @@
+#5.27.2016
+--- Feeder 
+    + Bots Name
+	+ Random Skin
+    + Little code edit
+	
+--- Server
+    - Delete socket.on('off') <-- idk why i add this xD
+	- Little code edit
+
+--  User script
+    + Add Skin change 
+	+ Add Bots name 
+	
