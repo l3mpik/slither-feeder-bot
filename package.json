@@ -1,7 +1,7 @@
 {
-  "name": "Slither Feeder Bot",
+  "name": "Slither-Feeder-Bot",
   "version": "0.0.0",
-  "description": "An Open Source Slither.io Slither bots",
+  "description": "An Open Source Slither bots",
   "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
