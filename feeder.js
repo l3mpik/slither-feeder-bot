@@ -103,6 +103,8 @@ socket.on('server', function(data){
 	b_name = data[1];
 	_skin  = data[2];
 	
+	spawn();
+	
 });
 
 console.log('Waiting for client!');
