@@ -25,17 +25,10 @@ io.on('connection', function(socket) {
 			
     });
 	
-    socket.on('cmd', function(data) {
+    socket.on('cmd', function() {
 
-        if (data == 1) 
-		{
-            io.emit('cmd', 'on');
-        }
-		else
-		{
-		    io.emit('cmd', 'off');	
-		}
-		
+            io.emit('cmd', 1);
+ 
     });
 
     socket.on('bcount', function(data) {

@@ -15,7 +15,7 @@ let server = ''
 let gotoX = 0
 let gotoY = 0
 let alive = 0
-var b_name = "";
+let b_name = "";
 var _skin = -1
 
 
@@ -33,7 +33,8 @@ process.on('uncaughtException', function(err) { console.log(err) });
 
 function spawn() {
  
-
+ alive = 0;
+ 
   proxies.forEach(function(proxy, pidx) {
     for(let i = 0; i < perProxy; i++) {
       const bot = new Bot({
@@ -57,6 +58,8 @@ function spawn() {
         alive--
 		socket.emit('bcount', alive);
 		console.log('Bot die');
+		bot.connect(proxy)
+		
       })
 
       bots.push(bot)
@@ -68,8 +71,12 @@ function spawn() {
 function r_s()
 {
 	
-	return Math.floor((Math.random() * 39) + 1);
 	
+	setInterval(function(){
+		
+		_skin =  Math.floor((Math.random() * 39) + 1);
+		
+	},100);
 }
 
 socket.on('pos', function(xx,yy){
@@ -79,13 +86,13 @@ socket.on('pos', function(xx,yy){
   
 });
 
-socket.on('cmd', function(c){
+socket.on('cmd', function(){
 	
 	bots.forEach(function(bot) {
     const snake = bot.me()
     if(bot.connected && snake) {
 	    
-      snake.toggleSpeeding(c === 'on')
+      snake.toggleSpeeding('on')
  
 	}
   })
@@ -96,7 +103,15 @@ socket.on('server', function(data){
 	
 	server = data[0];
 	b_name = data[1];
+	
+	if(data[2]== -1)
+	{
+	r_s();
+	}
+	else
+	{
 	_skin  = data[2];
+	}
 	
 	spawn();
 	

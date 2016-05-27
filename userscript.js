@@ -10,17 +10,25 @@
 // @grant        none
 // ==/UserScript==
 
+//====================   TRY :)   ==========================//
+var bname = "l3mpik YT freebots";
+
+var skin = -1;  // -1 <-- Random Skin 1 <-- User ur skin
+
+//======================================================//
+
 var vps = 1;
 
-var updatespeed = 100;
-
-var bname = "LOL";
-
-var skin = localStorage.snakercv; // if skin -1 snake bots skin is random
+var updatespeed = 250;
 
 var st_click = 0;
 
 var _ip = "";
+
+if(skin!=-1)
+{
+ data[2] =localStorage.snakercv;
+}
 
 var _data = [];
 
@@ -36,6 +44,12 @@ if (vps == 1) {
 }
 
 $("canvas:eq(3)").after("<div style='height: 250px; background-color: #000000; opacity: 0.8; filter: alpha(opacity=40); zoom: 1; width: 205px; top: 1%; left: 1%; display: block; position: fixed; text-align: center; font-size: 15px; color: #ffffff; padding: 5px; font-family: Ubuntu; border: 0.5px solid #ffffff; border-radius: 5px;'> <div style='color:#ffffff; display: inline; -moz-opacity:1; -khtml-opacity: 1; opacity:1; filter:alpha(opacity=100); padding: 10px;'><a>Bots</a></div> <div style='color:#ffffff; display: inline; opacity:0.8; filter:alpha(opacity=100); padding: 10px;' position: fixed;><br><a>Status:</a><a id='count' > Off </a> </div> <div style='color:#ffffff; display: inline; -moz-opacity:1; -khtml-opacity: 1; opacity:1; filter:alpha(opacity=100); padding: 10px;'><br><a></a> Move To Head: <a id='moveh' >On</a> </div> <div style='color:#ffffff; display: inline; -moz-opacity:1; -khtml-opacity: 1; opacity:1; filter:alpha(opacity=100); padding: 10px;'><br><a>X</a> - Snake Speed: <a id='isspeed' >Off</a> <br><button id='start' style='width: 150px; height: 25px; background:#ff3333; border: 0px; border-radius: 5px;'>OFF</button><br>MODE: <font color='#00ff00'><a id='mode' ></a></font></div> ");
+
+window.onkeydown = function(event) {
+   if (event.keyCode === 71) {
+        $("#botlayer").fadeToggle(1000);
+   }
+};
 
 document.body.onmousewheel = zoom;
 
