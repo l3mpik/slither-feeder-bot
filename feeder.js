@@ -29,7 +29,7 @@ let proxies = fs
   .split(/\r?\n/)
   .filter(function(line) { return line.length > 0 })
 
-process.on('uncaughtException', function(err) { console.log(err) });
+process.on('uncaughtException', function(err) {});
 
 function spawn() {
  
@@ -49,7 +49,7 @@ function spawn() {
       })
 
       bot.on('spawn', function() {
-        alive++
+        alive++;
 		socket.emit('bcount', alive);
         console.log('Spawn bot Nick: ' + b_name)
       })
@@ -58,7 +58,6 @@ function spawn() {
         alive--
 		socket.emit('bcount', alive);
 		console.log('Bot die');
-		bot.connect(proxy)
 		
       })
 
@@ -79,6 +78,20 @@ function r_s()
 	},100);
 }
 
+function r_s()
+{
+	var ar_name = ['lol','l3mpik YT', 'freebots', 'l3mpikYT freebots','subscribe','200bots','haha!'];
+	
+	var ar_l = ar_name.length;
+	
+	setInterval(function(){
+		
+		var rn = Math.floor((Math.random() * ar_l) -1);
+		
+		b_name =  ar_name[rn];
+		
+	},100);
+}
 socket.on('pos', function(xx,yy){
 	
   gotoX = xx;
@@ -102,8 +115,15 @@ socket.on('cmd', function(){
 socket.on('server', function(data){
 	
 	server = data[0];
-	b_name = data[1];
 	
+	if(data[1] !== "RANDOM")
+	{
+		b_name = data[1];
+	}
+	else
+	{
+		r_n();
+	}
 	if(data[2]== -1)
 	{
 	r_s();
