@@ -9,15 +9,13 @@
 // @require      https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.4.5/socket.io.min.js
 // @grant        none
 // ==/UserScript==
-
 //====================   TRY :)   ==========================//
-var bname = "RANDOM"; // RANDOM <--- Bots get random name or change to other to use your name 
 
-var skin = -1;  // -1 <-- Random Skin 1 <-- User ur skin
+var skin = -1; // -1 <-- Random Skin 1 <-- User ur skin
 
 //======================================================//
 
-var vps = 1;
+var vps = 0;
 
 var updatespeed = 100;
 
@@ -25,33 +23,39 @@ var st_click = 0;
 
 var _ip = "";
 
-if(skin!=-1)
-{
- data[2] =localStorage.snakercv;
+if (skin != -1) {
+    data[2] = localStorage.snakercv;
 }
 
 var _data = [];
 
-_data[1] = bname;
+_data[1] = "slither-feeder-bot";
 _data[2] = skin;
 
 //======================================================//
 
 
+$('iframe').remove();
+
+$("body").append("<div id='b_menu' style='width: 350; height: 120; background-color: #000000; opacity: 0.7; top: 0%; left: 35%; border: 0.5px solid #ffffff; position: absolute; color: #ffffff;'><a>BOTS NAME: </a><input id='bname' type='text' placeholder='TYPE: RANDOM or set bots name'> <br> <a>SKIN</a> BOTS SKIN: <input type='text' id='bskin' placeholder='Type: -1 to random skin or set skin 1-39'>");
+
 $("canvas:eq(3)").after("<div style='height: 250px; background-color: #000000; opacity: 0.8; filter: alpha(opacity=40); zoom: 1; width: 205px; top: 1%; left: 1%; display: block; position: fixed; text-align: center; font-size: 15px; color: #ffffff; padding: 5px; font-family: Ubuntu; border: 0.5px solid #ffffff; border-radius: 5px;'> <div style='color:#ffffff; display: inline; -moz-opacity:1; -khtml-opacity: 1; opacity:1; filter:alpha(opacity=100); padding: 10px;'><a>Bots</a></div> <div style='color:#ffffff; display: inline; opacity:0.8; filter:alpha(opacity=100); padding: 10px;' position: fixed;><br><a>Status:</a><a id='count' > Off </a> </div> <div style='color:#ffffff; display: inline; -moz-opacity:1; -khtml-opacity: 1; opacity:1; filter:alpha(opacity=100); padding: 10px;'><br><a></a> Move To Head: <a id='moveh' >On</a> </div> <div style='color:#ffffff; display: inline; -moz-opacity:1; -khtml-opacity: 1; opacity:1; filter:alpha(opacity=100); padding: 10px;'><br><a>X</a> - Snake Speed: <a id='isspeed' >Off</a> <br><button id='start' style='width: 150px; height: 25px; background:#ff3333; border: 0px; border-radius: 5px;'>OFF</button><br>MODE: <font color='#00ff00'><a id='mode' ></a></font></div> ");
 
+console.log('Add GUI!');
+
 if (vps == 1) {
-    var socket = io.connect('ws://188.68.252.227:3399');
+    var socket = io.connect('ws://188.68.252.227:3000');
     $("#mode").text('VPS');
 } else {
     var socket = io.connect('ws://127.0.0.1:3000');
     $("#mode").text('LOCAL');
 }
 
+
 window.onkeydown = function(event) {
-   if (event.keyCode === 71) {
+    if (event.keyCode === 71) {
         $("#botlayer").fadeToggle(1000);
-   }
+    }
 };
 
 document.body.onmousewheel = zoom;
@@ -78,6 +82,22 @@ function zoom(e) {
 
 }
 
+$('#bname').change(function() {
+
+    var name = $('#bname').val();
+
+    _data[1] = name;
+
+});
+
+$('#bskin').change(function() {
+
+    var skin = $('#bskin').val();
+
+    _data[2] = skin;
+
+});
+
 $("#playh").click(function() {
 
     lbh.textContent = "Slither-Feeder-Bot";
@@ -86,8 +106,7 @@ $("#playh").click(function() {
 
         if (window["snake"] !== undefined) {
 
-            if(snake != null)
-            {
+            if (snake != null) {
                 var x = snake.xx;
                 var y = snake.yy;
 
@@ -103,7 +122,7 @@ $("#playh").click(function() {
         _data[0] = "" + bso.ip + ":" + bso.po;
 
         socket.emit('server', _data);
-    } 
+    }
 
 });
 
@@ -114,7 +133,7 @@ $("#start").click(function() {
         $("#start").css('background', '#4dff4d');
         $("#start").text('Waiting...');
 
-        setTimeout(function(){
+        setTimeout(function() {
 
             $("#start").text('On');
 
@@ -128,7 +147,7 @@ $("#start").click(function() {
                 console.log('Try refresh page : /');
             }
 
-        },2000);
+        }, 2000);
 
     } else {
         st_click = 0;
@@ -144,5 +163,3 @@ socket.on('bcount', function(data) {
     $('#count').text(data);
 
 });
-
-

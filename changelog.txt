@@ -11,4 +11,16 @@
 --  User script
     + Add Skin change 
 	+ Add Bots name 
-	
+
+#5.27.2016
+--- Feeder
+   + Random names
+   + Random skin
+
+--- User script
+   + Random names
+   + Random skin
+   
+#5.27.2016
+--- User script
+   + Gui for bots name/random skin (sorry for bad gui im bad in css)

@@ -8,27 +8,27 @@ var s_port = 3000;
 
 
 io.on('connection', function(socket) {
-    
-	console.log('Connection!');
-	
-    socket.on('pos', function(x, y) {
-       
-	   io.emit('pos', x, y);
-       
-    });
-    
-	socket.on('server', function(data) {
 
-            io.emit('server', data);
-			
-			console.log('Bots name:' + data[1]);
-			
+    console.log('Connection!');
+
+    socket.on('pos', function(x, y) {
+
+        io.emit('pos', x, y);
+
     });
-	
+
+    socket.on('server', function(data) {
+
+        io.emit('server', data);
+
+        console.log('Bots name:' + data[1]);
+
+    });
+
     socket.on('cmd', function() {
 
-            io.emit('cmd', 1);
- 
+        io.emit('cmd', 1);
+
     });
 
     socket.on('bcount', function(data) {
