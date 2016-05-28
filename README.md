@@ -1,6 +1,3 @@
-
-Update server / feeder / userscript 
-
 # Slither-Feeder-Bot by l3mpik .
 # Slither Client by https://github.com/dahquan
 
@@ -20,4 +17,3 @@ Update server / feeder / userscript
 - [iiegor/slither](https://github.com/iiegor/slither)
 - [ClitherProject/Slither.io-Protocol](https://github.com/ClitherProject/Slither.io-Protocol)
 - [Google](http://www.google.com)
-
