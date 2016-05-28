@@ -24,3 +24,6 @@
 #5.27.2016
 --- User script
    + Gui for bots name/random skin (sorry for bad gui im bad in css)
+   
+--- Server/User script/Feeder
+   + Purified code + beautification code
