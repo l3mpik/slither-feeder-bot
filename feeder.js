@@ -73,7 +73,7 @@ function spawn() {
                 console.log('Spawn bot Nick: ' + b_name)
             })
 
-            bot.on('disconnected', function() {
+            bot.on('dead', function() {
                 alive--
                 socket.emit('bcount', alive);
                 console.log('Bot die');
