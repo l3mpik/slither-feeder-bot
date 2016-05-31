@@ -38,6 +38,23 @@ function spawn() {
     alive = 0;
 
     proxies.forEach(function(proxy, pidx) {
+        if (proxy == '#SOCKS5'){
+		  
+		  mode = 'socks';
+		  console.log('Change to Socks Proxy');
+		  
+	  } else if (proxy == '#HTTP'){
+		  
+		  mode = 'http';
+		  console.log('Change to HTTP Proxy');
+		  
+		  
+	  } else if (proxy == '#SOCKS4'){
+		  
+		  mode = 'socks4';
+		  console.log('Change to Socks Proxy');
+		  
+	  } else {
         for (let i = 0; i < perProxy; i++) {
             const bot = new Bot({
                 name: b_name,
@@ -66,6 +83,7 @@ function spawn() {
             bots.push(bot)
             bot.connect(proxy)
         }
+	  }
     })
 }
 
@@ -80,7 +98,7 @@ function r_s() {
 }
 
 function r_s() {
-    var ar_name = ['lol', 'l3mpik YT', 'freebots', 'l3mpikYT freebots', 'subscribe', '200bots', 'haha!'];
+    var ar_name = ['lol', 'l3mpik YT', 'freebots', 'l3mpikYT freebots', 'subscribe', '200bots', 'haha!', 'yariobots.tk'];
 
     var ar_l = ar_name.length;
 
