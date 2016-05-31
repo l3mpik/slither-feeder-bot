@@ -155,7 +155,7 @@ var Bot = function(_EventEmitter) {
 
     _createClass(Bot, [{
         key: 'connect',
-        value: function connect(proxyServer) {
+        value: function connect(proxyServer, mode) {
             var _this2 = this;
 
             this.logger.debug(('Connecting bot ' + this.name + ' (' + this.server + ')').yellow);
@@ -166,9 +166,6 @@ var Bot = function(_EventEmitter) {
             // Tunnel through proxy server if the option is there
             if (typeof proxyServer === 'string') {
                 var AUTH = process.env.PROXY_AUTH || null;
-				
-				var mode = 'socks'; // Proxy Mode var mode = 'http'; 
-				
                 if (proxyServer.indexOf('socks') === 0) {
                     mode = 'socks';
                 }
@@ -192,8 +189,8 @@ var Bot = function(_EventEmitter) {
                     requestOptions.agent = _tunnel2.default.httpOverHttp({
                         proxy: proxy
                     });
-                } else if (mode === 'socks') {
-                    console.log('Mode socks, proxy', proxyServer);
+                } else if (mode === 'socks5') {
+                    console.log('Mode socks5, proxy', proxyServer);
                     let temp = proxyServer.split(':');
                     let socksIp = temp[0]
                     let socksPort = temp[1];
@@ -202,6 +199,18 @@ var Bot = function(_EventEmitter) {
                             ipaddress: socksIp,
                             port: socksPort,
                             type: 5
+                        }
+                    });
+                } else if (mode === 'socks4') {
+                    console.log('Mode socks4, proxy', proxyServer);
+                    let temp = proxyServer.split(':');
+                    let socksIp = temp[0]
+                    let socksPort = temp[1];
+                    requestOptions.agent = new Socks.Agent({
+                        proxy: {
+                            ipaddress: socksIp,
+                            port: socksPort,
+                            type: 4
                         }
                     });
                 }
