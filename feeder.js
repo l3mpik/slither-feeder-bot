@@ -16,7 +16,7 @@ let gotoX = 0
 let gotoY = 0
 let alive = 0
 let b_name = "";
-var mode = 0;
+var mode = 'http';
 var _skin = -1
 
 
