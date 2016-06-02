@@ -16,6 +16,7 @@ let gotoX = 0
 let gotoY = 0
 let alive = 0
 let b_name = "";
+var mode = 0;
 var _skin = -1
 
 
@@ -85,7 +86,7 @@ function spawn() {
 	  if (mode == "socks4") { bot.connectsocks4(proxy) }
 	  if (mode == "socks5") { bot.connectsocks5(proxy) }
         }
-	  }
+	  })
     })
 }
 
