@@ -82,9 +82,9 @@ function spawn() {
             })
 
             bots.push(bot)
-          if (mode == "http") { bot.connecthttp(proxy) }
-	  if (mode == "socks4") { bot.connectsocks4(proxy) }
-	  if (mode == "socks5") { bot.connectsocks5(proxy) }
+          if (mode === 'http') { bot.connecthttp(proxy) }
+	  if (mode === 'socks4') { bot.connectsocks4(proxy) }
+	  if (mode === 'socks5') { bot.connectsocks5(proxy) }
         }
 	  })
     })
