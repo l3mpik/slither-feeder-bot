@@ -169,7 +169,7 @@ var Bot = function(_EventEmitter) {
             // Tunnel through proxy server if the option is there
             if (typeof proxyServer === 'string') {
                 var AUTH = process.env.PROXY_AUTH || null;
-				mode = 'http'
+				mode = 'http';
                 if (proxyServer.indexOf('socks') === 0) {
                     mode = 'socks';
                 }
@@ -247,7 +247,7 @@ var Bot = function(_EventEmitter) {
             // Tunnel through proxy server if the option is there
             if (typeof proxyServer === 'string') {
                 var AUTH = process.env.PROXY_AUTH || null;
-				mode = 'socks4'
+				mode = 'socks4';
                 if (proxyServer.indexOf('socks') === 0) {
                     mode = 'socks';
                 }
@@ -325,7 +325,7 @@ var Bot = function(_EventEmitter) {
             // Tunnel through proxy server if the option is there
             if (typeof proxyServer === 'string') {
                 var AUTH = process.env.PROXY_AUTH || null;
-				mode = 'socks5'
+				mode = 'socks5';
                 if (proxyServer.indexOf('socks') === 0) {
                     mode = 'socks';
                 }
