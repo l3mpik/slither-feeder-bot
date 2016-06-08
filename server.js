@@ -4,15 +4,15 @@ var path = require("path");
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var s_port = 3000;
+var s_port = 4000;
 
 io.on('connection', function(socket) {
-
-    console.log('Connection!');
-
+    
+	console.log('Connection!');
+	
     socket.on('pos', function(x, y) {
-
-        io.emit('pos', x, y);
+       
+	   io.emit('pos', x, y);
 
     });
 
@@ -23,14 +23,14 @@ io.on('connection', function(socket) {
         } else {
             io.emit('cmd', 'off');
         }
-
+		
     });
 
     socket.on('server', function(data) {
 
-        io.emit('server', data);
-        console.log(data);
-
+            io.emit('server', data);
+			console.log(data);
+  	
     });
 
 
