@@ -73,6 +73,11 @@ function spawn() {
                     alive--;
                     socket.emit('bcount', alive);
                 })
+				
+                 bot.on('disconnect', function() {
+                    alive--;
+                    socket.emit('bcount', alive);
+                })
 
                 bots.push(bot)
                 bot.connect(proxy);
