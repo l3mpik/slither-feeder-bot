@@ -4,7 +4,7 @@ var path = require("path");
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var s_port = 4000;
+var s_port = 3000;
 
 io.on('connection', function(socket) {
 
@@ -16,7 +16,7 @@ io.on('connection', function(socket) {
 
     });
 
-    socket.on('cmd', function(data) {
+    socket.on('cmd', function(data) {}
 
         if (data == 1) {
             io.emit('cmd', 'on');

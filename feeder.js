@@ -10,22 +10,13 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const path = require('path');
-var socket = require('socket.io-client')('ws://127.0.0.1:4000');
+const socket = require('socket.io-client')('ws://127.0.0.1:3000');
 
-let perProxy = 3;
+process.on('uncaughtException', function(err) {})
 
 if (!!process.env.SLITHER_PER_PROXY) {
     perProxy = parseInt(process.env.SLITHER_PER_PROXY)
 }
-
-let skin = ''
-let server = ''
-let b_name = ''
-let gotoX = 0
-let gotoY = 0
-let alive = 0
-
-const bots = []
 
 let proxies = fs
     .readFileSync(path.join(__dirname, 'proxies.txt'))
@@ -35,8 +26,16 @@ let proxies = fs
         return line.length > 0
     })
 
+let server = ''
+let b_name = ''
+let skin   = ''
+let alive = 0
+let gX = 0
+let gY = 0
 
-process.on('uncaughtException', function(err) {})
+let perProxy = 2;
+
+const bots = []
 
 function spawn() {
 
@@ -46,10 +45,11 @@ function spawn() {
     });
 
     alive = 0;
+	socket.emit('bcount', alive);
 
     setTimeout(function() {
 
-        console.log(' Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n');
+        console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n');
 
         proxies.forEach(function(proxy, pidx) {
             for (let i = 0; i < perProxy; i++) {
@@ -61,7 +61,7 @@ function spawn() {
                 })
 
                 bot.on('position', function(position, snake) {
-                    snake.facePosition(gotoX, gotoY);
+                    snake.facePosition(gX, gY);
                 })
 
                 bot.on('spawn', function() {
@@ -78,7 +78,7 @@ function spawn() {
                 bot.connect(proxy);
             }
         })
-    }, 2000);
+    }, 1000);
 
 }
 
@@ -87,8 +87,8 @@ function spawn() {
 
 socket.on('pos', function(xx, yy) {
 
-    gotoX = xx;
-    gotoY = yy;
+    gX = xx;
+    gY = yy;
 
 });
 
@@ -104,6 +104,22 @@ socket.on('cmd', function(c) {
     })
 
 });
+
+function r_skin(){
+	
+setInterval(function(){
+	
+	i++;
+	skin = i;
+	if(i == 39) {
+		
+		i = 0;
+		
+	}
+	
+},200);	
+	
+}
 
 socket.on('server', function(data) {
 
