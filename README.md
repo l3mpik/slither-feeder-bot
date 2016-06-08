@@ -1,7 +1,7 @@
 # Slither-Feeder-Bot by l3mpik .
 # Slither Client by https://github.com/dahquan
-[[Documentation](http://dahquan.github.io/rattlesnake/)]
-[[Examples](http://dahquan.github.io/rattlesnake/examples.html)]
+# [[Documentation](http://dahquan.github.io/rattlesnake/)]
+# [[Examples](http://dahquan.github.io/rattlesnake/examples.html)]
 
 ## 1. Download Slither-Feeder-Bot
 ## 2. Go to feeder path
