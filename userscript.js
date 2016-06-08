@@ -10,7 +10,7 @@
 // @grant        none
 // ==/UserScript==
 //====================   TRY :)   ==========================//
-var skin = -1; // -1 <-- Random Skin -1
+var skin = -1; // -1 <-- Random Skin 1 <-- User ur skin
 
 //======================================================//
 
@@ -81,7 +81,7 @@ $('#fsrv').click(function() {
 });
 
 if (vps == 1) {
-    var socket = io.connect('ws://188.68.252.227:3000');
+    var socket = io.connect('ws://188.68.252.227:3333');
     $("#mode").text('VPS');
 } else {
     var socket = io.connect('ws://127.0.0.1:3000');
@@ -173,7 +173,7 @@ $('#bskin').change(function() {
 
 $("#playh").click(function() {
 
-    lbh.textContent = "l3mpik+";
+    lbh.textContent = "Slither-Feeder-Bot";
     ii.src = "";
 
     if (window["bso"] !== undefined) {
