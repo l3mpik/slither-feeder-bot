@@ -1,27 +1,31 @@
 'use strict'
 
+////////////////////////////////////////////////////////////
+//                                                       //
+//     Feeder/server/userscript by l3mpik			     //
+///////////////////////////////////////////////////////////
+
 const Bot = require('./dist');
 const express = require('express');
+const app = express();
 const fs = require('fs');
 const path = require('path');
-var socket = require('socket.io-client')('ws://127.0.0.1:3000');
+var socket = require('socket.io-client')('ws://127.0.0.1:4000');
 
-
-const bots = []
-
-let perProxy = 2
-
-let server = ''
-let gotoX = 0
-let gotoY = 0
-let alive = 0
-let b_name = "";
-var _skin = -1
-
+let perProxy = 3;
 
 if (!!process.env.SLITHER_PER_PROXY) {
     perProxy = parseInt(process.env.SLITHER_PER_PROXY)
 }
+
+let skin = ''
+let server = ''
+let b_name = ''
+let gotoX = 0
+let gotoY = 0
+let alive = 0
+
+const bots = []
 
 let proxies = fs
     .readFileSync(path.join(__dirname, 'proxies.txt'))
@@ -31,85 +35,56 @@ let proxies = fs
         return line.length > 0
     })
 
-process.on('uncaughtException', function(err) {});
+
+process.on('uncaughtException', function(err) {})
 
 function spawn() {
 
+    bots.forEach(function(bot) {
+        bot.close()
+        console.log('Bot disconnect!');
+    });
+
     alive = 0;
 
-    proxies.forEach(function(proxy, pidx) {
-        if (proxy == '#SOCKS5'){
-		  
-		  mode = 'socks';
-		  console.log('Change to Socks Proxy');
-		  
-	  } else if (proxy == '#HTTP'){
-		  
-		  mode = 'http';
-		  console.log('Change to HTTP Proxy');
-		  
-		  
-	  } else if (proxy == '#SOCKS4'){
-		  
-		  mode = 'socks4';
-		  console.log('Change to Socks Proxy');
-		  
-	  } else {
-        for (let i = 0; i < perProxy; i++) {
-            const bot = new Bot({
-                name: b_name,
-                reconnect: true,
-                skin: _skin,
-                server: server
-            })
+    setTimeout(function() {
 
-            bot.on('position', function(position, snake) {
-                snake.facePosition(gotoX, gotoY)
-            })
+        console.log(' Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n');
 
-            bot.on('spawn', function() {
-                alive++;
-                socket.emit('bcount', alive);
-                console.log('Spawn bot Nick: ' + b_name)
-            })
+        proxies.forEach(function(proxy, pidx) {
+            for (let i = 0; i < perProxy; i++) {
+                const bot = new Bot({
+                    name: b_name,
+                    reconnect: true,
+                    skin: skin,
+                    server: server
+                })
 
-            bot.on('dead', function() {
-                alive--
-                socket.emit('bcount', alive);
-                console.log('Bot die');
+                bot.on('position', function(position, snake) {
+                    snake.facePosition(gotoX, gotoY);
+                })
 
-            })
+                bot.on('spawn', function() {
+                    alive++;
+                    socket.emit('bcount', alive);
+                })
 
-            bots.push(bot)
-            bot.connect(proxy)
-        }
-	  }
-    })
+                bot.on('dead', function() {
+                    alive--;
+                    socket.emit('bcount', alive);
+                })
+
+                bots.push(bot)
+                bot.connect(proxy);
+            }
+        })
+    }, 2000);
+
 }
 
-function r_s() {
 
 
-    setInterval(function() {
 
-        _skin = Math.floor((Math.random() * 39) + 1);
-
-    }, 100);
-}
-
-function r_s() {
-    var ar_name = ['lol', 'l3mpik YT', 'freebots', 'l3mpikYT freebots', 'subscribe', '200bots', 'haha!', 'yariobots.tk'];
-
-    var ar_l = ar_name.length;
-
-    setInterval(function() {
-
-        var rn = Math.floor((Math.random() * ar_l) - 1);
-
-        b_name = ar_name[rn];
-
-    }, 100);
-}
 socket.on('pos', function(xx, yy) {
 
     gotoX = xx;
@@ -117,13 +92,13 @@ socket.on('pos', function(xx, yy) {
 
 });
 
-socket.on('cmd', function() {
+socket.on('cmd', function(c) {
 
     bots.forEach(function(bot) {
         const snake = bot.me()
         if (bot.connected && snake) {
 
-            snake.toggleSpeeding('on')
+            snake.toggleSpeeding(c === 'on')
 
         }
     })
@@ -133,20 +108,38 @@ socket.on('cmd', function() {
 socket.on('server', function(data) {
 
     server = data[0];
+    b_name = data[1];
 
-    if (data[1] !== "RANDOM") {
-        b_name = data[1];
-    } else {
-        r_n();
-    }
     if (data[2] == -1) {
-        r_s();
+
+        skin = r_skin();
     } else {
-        _skin = data[2];
+
+        skin = data[2];
     }
 
     spawn();
 
 });
 
+
+socket.on('cmd', function(ss) {
+
+    if (ss == 1) {
+        bots.forEach(function(bot) {
+            const snake = bot.me()
+            if (bot.connected && snake) {
+
+                snake.toggleSpeeding(c === 'on');
+
+            }
+        });
+
+    }
+
+});
+
+
 console.log('Waiting for client!');
+
+app.listen(3000)

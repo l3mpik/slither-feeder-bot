@@ -4,8 +4,7 @@ var path = require("path");
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
-var s_port = 3000;
-
+var s_port = 4000;
 
 io.on('connection', function(socket) {
 
@@ -17,22 +16,27 @@ io.on('connection', function(socket) {
 
     });
 
+    socket.on('cmd', function(data) {
+
+        if (data == 1) {
+            io.emit('cmd', 'on');
+        } else {
+            io.emit('cmd', 'off');
+        }
+
+    });
+
     socket.on('server', function(data) {
 
         io.emit('server', data);
-
-        console.log('Bots name:' + data[1]);
-
-    });
-
-    socket.on('cmd', function() {
-
-        io.emit('cmd', 1);
+        console.log(data);
 
     });
+
 
     socket.on('bcount', function(data) {
 
+        //console.log('Bots: ' + data);	
         io.emit('bcount', data);
 
     })
