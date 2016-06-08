@@ -4,13 +4,11 @@
 [![Join the chat at https://gitter.im/dahquan/rattlesnake](https://badges.gitter.im/dahquan/rattlesnake.svg)](https://gitter.im/dahquan/rattlesnake?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [[Documentation](http://dahquan.github.io/rattlesnake/)]
 [[Examples](http://dahquan.github.io/rattlesnake/examples.html)]
 
-## 1. Download repo
-## 2. Go to main path 
-## 3. Type npm install
-## 4. node/nodejs server
-## 5. node/nodejs feeder
-## 6. Install userscript for tempermonkey
-## 7. :))
+## 1. Download Slither-Feeder-Bot
+## 2. Go to feeder path
+## 3. Double click "firstrun.bat" 
+## 4. Next run Start Bots.exe
+## 5. : )
 
 ## Special Thanks To:
 - [dahquan/rattlesnake] (https://github.com/dahquan/)
