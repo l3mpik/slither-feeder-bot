@@ -16,7 +16,7 @@ io.on('connection', function(socket) {
 
     });
 
-    socket.on('cmd', function(data) {}
+    socket.on('cmd', function(data) {
 
         if (data == 1) {
             io.emit('cmd', 'on');
