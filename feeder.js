@@ -10,13 +10,9 @@ const express = require('express');
 const app = express();
 const fs = require('fs');
 const path = require('path');
-const socket = require('socket.io-client')('ws://127.0.0.1:3000');
+const socket = require('socket.io-client')('ws://127.0.0.1:4000');
 
 process.on('uncaughtException', function(err) {})
-
-if (!!process.env.SLITHER_PER_PROXY) {
-    perProxy = parseInt(process.env.SLITHER_PER_PROXY)
-}
 
 let proxies = fs
     .readFileSync(path.join(__dirname, 'proxies.txt'))
@@ -24,32 +20,29 @@ let proxies = fs
     .split(/\r?\n/)
     .filter(function(line) {
         return line.length > 0
-    })
+    });
 
-let server = ''
-let b_name = ''
-let skin   = ''
-let alive = 0
-let gX = 0
-let gY = 0
+let server = '';
+let b_name = '';
+let skin   = '';
+let alive = 0;
+let gX = 0;
+let gY = 0;
 
 let perProxy = 2;
 
-const bots = []
+const bots = [];
 
 function spawn() {
 
     bots.forEach(function(bot) {
         bot.close()
-        console.log('Bot disconnect!');
     });
 
     alive = 0;
 	socket.emit('bcount', alive);
 
     setTimeout(function() {
-
-        console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n');
 
         proxies.forEach(function(proxy, pidx) {
             for (let i = 0; i < perProxy; i++) {
@@ -81,6 +74,9 @@ function spawn() {
 
                 bots.push(bot)
                 bot.connect(proxy);
+				
+				console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n\n\n\n');
+				
             }
         })
     }, 1000);
