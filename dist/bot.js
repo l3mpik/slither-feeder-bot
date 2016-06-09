@@ -119,10 +119,10 @@ function _inherits(subClass, superClass) {
 var Bot = function(_EventEmitter) {
     _inherits(Bot, _EventEmitter);
 
-    // Options
-    // name - snake name
-    // server - server address to connect to
-    // reconnect - whether to reconnect or not after death or disconnect
+    //Options
+    name: "nikos"
+        // server - server address to connect to
+        // reconnect - whether to reconnect or not after death or disconnect
 
     function Bot(options) {
         _classCallCheck(this, Bot);
@@ -143,7 +143,7 @@ var Bot = function(_EventEmitter) {
         _this.name = name;
         _this.server = server;
         _this.skin = skin;
-		_im_p =  name;
+
         _this.conn = null;
         _this.connected = false;
 
@@ -155,21 +155,31 @@ var Bot = function(_EventEmitter) {
 
     _createClass(Bot, [{
         key: 'connect',
-        value: function connect(proxyServer, mode) {
+        value: function connect(proxyServer) {
             var _this2 = this;
 
             this.logger.debug(('Connecting bot ' + this.name + ' (' + this.server + ')').yellow);
             this.proxyServer = proxyServer;
+
             var client = new _websocket.client();
             var requestOptions = {};
 
-            // Tunnel through proxy server if the option is there
+                       // Tunnel through proxy server if the option is there
             if (typeof proxyServer === 'string') {
                 var AUTH = process.env.PROXY_AUTH || null;
-                if (proxyServer.indexOf('socks') === 0) {
-                    mode = 'socks';
-                }
+				
+				let ptype = proxyServer.split(':');
+				
+				if(ptype[1] == 80){
+					
+				var mode = 'http';
+				
+				}else if(ptype[1] != 80){
+					
+					var mode = 'socks';
 
+				}
+                
                 if (mode === 'http') {
                     var proxy = {
                         host: proxyServer,
@@ -178,9 +188,11 @@ var Bot = function(_EventEmitter) {
 
                     var idx = proxy.host.indexOf(':');
                     if (idx > 0) {
-                        proxy.port = proxy.host.substring(idx + 1);
-                        proxy.host = proxy.host.substring(0, idx);
-                    }
+                       
+                        proxy.host = ptype[0];
+					    proxy.port = ptype[1];
+                    
+					}
 
                     if (AUTH) {
                         proxy.proxyAuth = AUTH;
@@ -189,8 +201,8 @@ var Bot = function(_EventEmitter) {
                     requestOptions.agent = _tunnel2.default.httpOverHttp({
                         proxy: proxy
                     });
-                } else if (mode === 'socks5') {
-                    console.log('Mode socks5, proxy', proxyServer);
+					
+                } else if (mode === 'socks') {
                     let temp = proxyServer.split(':');
                     let socksIp = temp[0]
                     let socksPort = temp[1];
@@ -201,19 +213,8 @@ var Bot = function(_EventEmitter) {
                             type: 5
                         }
                     });
-                } else if (mode === 'socks4') {
-                    console.log('Mode socks4, proxy', proxyServer);
-                    let temp = proxyServer.split(':');
-                    let socksIp = temp[0]
-                    let socksPort = temp[1];
-                    requestOptions.agent = new Socks.Agent({
-                        proxy: {
-                            ipaddress: socksIp,
-                            port: socksPort,
-                            type: 4
-                        }
-                    });
-                }
+                } 
+
             } else if ((typeof proxyServer === 'undefined' ? 'undefined' : _typeof(proxyServer)) === 'object') {
                 requestOptions.agent = proxyServer;
             }
