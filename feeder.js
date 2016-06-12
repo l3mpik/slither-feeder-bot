@@ -33,19 +33,9 @@ let perProxy = 2;
 
 const bots = [];
 
-function spawn() {
-
-    bots.forEach(function(bot) {
-        bot.close()
-    });
-
-    alive = 0;
-	socket.emit('bcount', alive);
-
-    setTimeout(function() {
-
-        proxies.forEach(function(proxy, pidx) {
-            for (let i = 0; i < perProxy; i++) {
+function s_one(){
+	
+         for (let i = 0; i < perProxy; i++) {
                 const bot = new Bot({
                     name: b_name,
                     reconnect: true,
@@ -74,9 +64,57 @@ function spawn() {
 
                 bots.push(bot)
                 bot.connect(proxy);
+            }
+
+}
+
+function spawn() {
+
+    bots.forEach(function(bot) {
+        bot.close()
+        console.log('Bot disconnect!');
+    });
+
+    alive = 0;
+	socket.emit('bcount', alive);
+
+    setTimeout(function() {
+
+      
+        proxies.forEach(function(proxy, pidx) {
+            for (let i = 0; i < perProxy; i++) {
+                const bot = new Bot({
+                    name: b_name,
+                    reconnect: true,
+                    skin: skin,
+                    server: server
+                })
+
+                bot.on('position', function(position, snake) {
+                    snake.facePosition(gX, gY);
+                })
+
+                bot.on('spawn', function() {
+                    alive++;
+                    socket.emit('bcount', alive);
+                })
+
+                bot.on('dead', function() {
+                    alive--;
+                    socket.emit('bcount', alive);
+                })
 				
-				console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n\n\n\n');
+                 bot.on('disconnect', function() {
+                    alive--;
+                    socket.emit('bcount', alive);
+					s_one();
+                })
+
+                bots.push(bot)
+                bot.connect(proxy);
 				
+				  console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n\n\n\n');
+
             }
         })
     }, 1000);
