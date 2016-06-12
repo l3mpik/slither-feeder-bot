@@ -27,3 +27,20 @@
    
 --- Server/User script/Feeder
    + Purified code + beautification code
+   
+FROM: # #5.27.2016
+
+--- XX Times edit feeder
+
+-- XX Times edit userscript
+
+TO:  #6.13.2016
+--- Feeder Fix ( 0 bots in console )
+
+--- Bot start when u click Play button
+
+Next: 
+
+--- User skink changer ( rotator / hack ) 
+
+--- Show FPS In left bots menu 
