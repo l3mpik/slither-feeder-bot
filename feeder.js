@@ -33,40 +33,6 @@ let perProxy = 2;
 
 const bots = [];
 
-function s_one(){
-	
-         for (let i = 0; i < perProxy; i++) {
-                const bot = new Bot({
-                    name: b_name,
-                    reconnect: true,
-                    skin: skin,
-                    server: server
-                })
-
-                bot.on('position', function(position, snake) {
-                    snake.facePosition(gX, gY);
-                })
-
-                bot.on('spawn', function() {
-                    alive++;
-                    socket.emit('bcount', alive);
-                })
-
-                bot.on('dead', function() {
-                    alive--;
-                    socket.emit('bcount', alive);
-                })
-				
-                 bot.on('disconnect', function() {
-                    alive--;
-                    socket.emit('bcount', alive);
-                })
-
-                bots.push(bot)
-                bot.connect(proxy);
-            }
-
-}
 
 function spawn() {
 
@@ -76,6 +42,7 @@ function spawn() {
     });
 
     alive = 0;
+	
 	socket.emit('bcount', alive);
 
     setTimeout(function() {
@@ -97,23 +64,25 @@ function spawn() {
                 bot.on('spawn', function() {
                     alive++;
                     socket.emit('bcount', alive);
+					console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n\n\n\n');
                 })
 
                 bot.on('dead', function() {
                     alive--;
                     socket.emit('bcount', alive);
+					console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n\n\n\n');
                 })
 				
                  bot.on('disconnect', function() {
                     alive--;
                     socket.emit('bcount', alive);
-					s_one();
+					console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n\n\n\n');
                 })
 
                 bots.push(bot)
                 bot.connect(proxy);
 				
-				  console.log('Available proxy: ' + proxies.length + '\n Chance to spawn max: ' + proxies.length * perProxy + ' bots' + ' Now: ' + alive + '\n\n\n\n\n\n\n\n\n\n\n');
+				  
 
             }
         })
